@@ -19,10 +19,14 @@ steps:
       version: "5.0.x"
 
   - task: DotNetCoreCLI@2
+    displayName: "dotnet build"
     inputs:
-      command: test
-      projects: "**/*test/*.csproj"
-      arguments: "--configuration $(buildConfiguration)"
+      command: "build"
+      configuration: $(buildConfiguration)
 
-  - script: dotnet build --configuration $(buildConfiguration)
-    displayName: "dotnet build $(buildConfiguration)"
+  - task: DotNetCoreCLI@2
+    displayName: "dotnet test"
+    inputs:
+      command: "test"
+      arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
+      publishTestResults: true
