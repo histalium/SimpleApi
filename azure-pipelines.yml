@@ -30,3 +30,15 @@ steps:
       command: "test"
       arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
       publishTestResults: true
+
+  - task: DotNetCoreCLI@2
+    displayName: "dotnet publish"
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: "src/SimpleApi/SimpleApi.csproj"
+      arguments: "--configuration $(buildConfiguration) --output $(Build.ArtifactStaginDirectory)"
+      zipAfterPublish: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: "publish artifacts"
