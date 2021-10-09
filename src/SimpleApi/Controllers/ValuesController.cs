@@ -24,7 +24,7 @@ namespace SimpleApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "Histalium Fail";
+            return "Histalium";
         }
     }
 }
